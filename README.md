@@ -58,14 +58,23 @@ configuration.api_key['X-Auth-Token'] = 'YOUR_API_KEY'
 # configuration.api_key_prefix['X-Auth-Token'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = MimePost.AccountsApi(MimePost.ApiClient(configuration))
+api_instance = MimePost.EmailsApi(MimePost.ApiClient(configuration))
+
+to_email     = MimePost.EmailTo(email = "to@example.com");
+
+body = MimePost.Email(
+    subject     =   "Test email sent using MimePost Python SDK",
+    from_email  =   "from@example.com",
+    html        =   "<p>This is a body of the test email sent using MimePost Python SDK</p>",
+    to          =   [to_email],
+) # Email | Single Email object 
 
 try:
-    # Get account profile details
-    api_response = api_instance.account_profile_get()
+    # Send email
+    api_response = api_instance.send_email(body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling AccountsApi->account_profile_get: %s\n" % e)
+    print("Exception when calling EmailsApi->send_email: %s\n" % e)
 
 ```
 
